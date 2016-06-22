@@ -1,0 +1,109 @@
+---
+  
+- name: Download Sonar Artifact
+  get_url:
+    url: "{{ sonar_url }}"
+    dest: "{{ sonar_local_archive }}"
+  tags: sonar
+ 
+- name: Create Sonar User
+  user:
+    name: "{{ sonar_user }}"
+    shell: "/bin/bash"
+    home: "{{ sonar_home_dir }}"
+    createhome: no
+    state: present
+  tags: sonar
+ 
+- name: Extract Sonar Artifact
+  unarchive: 
+    src: "{{ sonar_local_archive }}"
+    dest: "{{ sonar_base_dir }}"
+    copy: no
+    creates: "{{ sonar_install_dir }}"
+    group: "{{ sonar_group }}"
+    owner: "{{ sonar_user }}"
+  tags: sonar
+
+- name: Create Sonar Symbolic Link
+  file:
+    src: "{{ sonar_install_dir }}"
+    dest: "{{ sonar_home_dir }}"
+    state: link 
+    group: "{{ sonar_group }}"
+    owner: "{{ sonar_user }}"
+  tags: sonar
+
+- name: Add SONAR_HOME Variable
+  lineinfile: 
+    dest: /etc/profile
+    regexp: "^export SONAR_HOME=/usr/local/nexus-{{sonar_version}}"
+    line: "export SONAR_HOME=/usr/local/nexus-{{sonar_version}}"
+  tags: sonar
+  
+- name: Create Sonar PID Directory
+  file: 
+    path: "{{sonar_pid_dir}}"
+    state: directory
+    group: "{{ sonar_group }}"
+    owner: "{{ sonar_user }}"
+  tags: sonar
+  
+- name: Create Sonar Work Configuration Directory
+  file: 
+    path: "{{sonar_sonarqube_work_dir}}/sonar/conf"
+    state: directory
+    group: "{{ sonar_group }}"
+    owner: "{{ sonar_user }}"
+  tags: sonar
+  
+#- name: Copy Work Sonar Configuration File
+#  copy: 
+#    src: nexus/nexus.xml
+#    dest: "{{nexus_sonatype_work_dir}}/nexus/conf/"
+#    group: "{{ nexus_group }}"
+#    owner: "{{ nexus_user }}"
+#  notify:
+#  - restart nexus
+#  tags: sonar
+  
+
+- name: Custom Sonar Configuration File Settings
+  replace:
+    dest: "{{ sonar_home_dir }}/bin/linux-x86-64/sonar.sh"
+    regexp: "{{ item.regex }}"
+    replace: "{{ item.replace }}"
+    backup: yes
+  with_items:
+    - { regex: "^PIDDIR=\".\"", replace: "PIDDIR=\"/var/run/sonar\"" }
+  notify:
+  - restart sonar
+  tags: sonar
+  
+- name: Copy Sonar Service File
+  copy: 
+    src: sonar/sonar.service
+    dest: /etc/systemd/system/
+    mode: 0664
+  notify:
+  - reload systemd
+  - restart sonar
+  tags: sonar
+  
+- name: Open Firewall for Sonar
+  firewalld:
+    port: 9000/tcp
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  tags: sonar
+  
+- name: Enable Sonar Service
+  service: 
+    name: sonar
+    enabled: true
+  tags: sonar
+  
+  
+# TODO: Need to handle custom configurations

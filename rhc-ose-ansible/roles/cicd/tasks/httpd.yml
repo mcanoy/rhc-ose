@@ -1,5 +1,12 @@
 ---
   
+- name: Installing Python Policy Utils
+  yum: 
+    name:  policycoreutils-python
+    state: present
+  tags: httpd
+
+
 - name: Installing HTTPD
   yum: 
     name: httpd

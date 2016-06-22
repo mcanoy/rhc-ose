@@ -131,6 +131,11 @@ under the License.
     </server>
     -->
     <server>
+      <id>Releases</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+    <server>
       <id>nexus</id>
       <username>admin</username>
       <password>admin123</password>

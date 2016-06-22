@@ -1,0 +1,14 @@
+[Unit]
+Description=Sonarqube Sonar
+
+[Service]
+Type=forking
+PIDFile=/var/run/sonar/SonarQube.pid
+ExecStart=/usr/local/sonar/bin/linux-x86-64/sonar.sh start
+ExecReload=/usr/local/sonar/bin/linux-x86-64/sonar.sh restart
+ExecStop=/usr/local/sonar/bin/linux-x86-64/sonar.sh stop
+
+[Install]
+Alias=sonar
+WantedBy=default.target
+
