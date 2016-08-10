@@ -1,0 +1,26 @@
+---
+
+# Jenkins is starting up and adding plugins etc... wait for it to become ready
+- name: Waiting for Jenkins to become available
+  wait_for: host="{{ jenkins_host_url }}" port="{{ mapped_http_port }}" delay=30
+
+# Ansible expects a fully formed repo but the Jenkins Repo is empty. Ignore this error"
+- name: Clone Workflow Repo
+  git: repo="http://{{ jenkins_host_url }}:{{ mapped_http_port }}/workflowLibs.git"
+       dest="{{ jenkins_home_dir }}-tmp/global-pipeline"
+       update="no"
+  ignore_errors: yes
+
+- name: Add RHT Labs Remote
+  command: git remote add rhtlabs {{ git_global_pipeline }}
+    chdir="{{ jenkins_home_dir }}-tmp/global-pipeline"
+
+- name: Pull RHT Labs Master
+  command: git pull rhtlabs master
+    chdir="{{ jenkins_home_dir }}-tmp/global-pipeline"
+
+- name: Push Jenkins Master
+  command: git push origin master
+    chdir="{{ jenkins_home_dir }}-tmp/global-pipeline"
+
+

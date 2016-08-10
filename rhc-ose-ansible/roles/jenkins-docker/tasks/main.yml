@@ -1,0 +1,7 @@
+---
+
+- include: jenkins_config.yml
+
+- include: jenkins_docker.yml
+
+- include: jenkins_global_pipeline.yml

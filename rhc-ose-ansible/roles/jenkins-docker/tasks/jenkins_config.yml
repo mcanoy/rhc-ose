@@ -1,0 +1,15 @@
+---
+
+- name: Copy Jenkins Configuration Files
+  copy:
+    src: jenkins/
+    dest: "{{ jenkins_home_dir }}"
+    group: "{{ jenkins_group }}"
+    owner: "{{ jenkins_user }}"
+
+- name: Copy Jenkins Docker Files
+  copy:
+    src: docker/
+    dest: "{{ jenkins_home_dir }}-tmp"
+    group: "{{ jenkins_group }}"
+    owner: "{{ jenkins_user }}"
