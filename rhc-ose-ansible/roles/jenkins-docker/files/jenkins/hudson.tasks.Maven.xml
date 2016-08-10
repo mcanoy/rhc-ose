@@ -1,7 +1,7 @@
 <hudson.tasks.Maven_-DescriptorImpl>
   <installations>
     <hudson.tasks.Maven_-MavenInstallation>
-      <name>M3-kmcanoy</name>
+      <name>Maven3.3.9</name>
       <properties>
         <hudson.tools.InstallSourceProperty>
           <installers>
