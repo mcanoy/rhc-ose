@@ -13,10 +13,11 @@ mapped_ssh_port: 2229
 mapped_http_port: 8089
 mapped_slave_agent: 50009
 
+docker_from: jenkins:2.7.1
 docker_image_name: rh-jenkins
 docker_tag: ubu-2.7.1
 
-jenkins_home_volume: "/opt/jenkins:/var/jenkins_home"
+jenkins_home_volume: "{{ jenkins_home_dir }}:/var/jenkins_home"
 certs_volume: "/etc/ssl/certs/java/:/etc/ssl/certs/java/"
 oc_tool_volume: "/opt/rh/OSE/oc:/opt/rh/OSE/oc"
 
