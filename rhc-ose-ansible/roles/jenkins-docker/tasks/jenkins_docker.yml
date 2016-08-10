@@ -1,0 +1,26 @@
+---
+  - name: Build Jenkins Docker Image
+    docker_image:
+      name: "{{ docker_image_name }}"
+      tag: "{{ docker_tag }}"
+      path: "{{ jenkins_home_dir }}-tmp"
+
+  - name: Create a data container
+    docker_container:
+      name: "{{ docker_image_name }}"
+      image: "{{ docker_image_name }}:{{ docker_tag }}"
+      state: started
+      exposed_ports:
+       - "{{ container_http_port }}"
+       - "{{ container_ssh_port }}"
+       - "{{ container_slave_agent }}"
+      published_ports:
+       - "{{ mapped_http_port }}:{{ container_http_port }}"
+       - "{{ mapped_ssh_port }}:{{ container_ssh_port }}"
+       - "{{ mapped_slave_agent }}:{{ container_slave_agent }}"
+      env: 
+        JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+      volumes:
+        - "{{ jenkins_home_volume }}"
+        - "{{ oc_tool_volume }}"
+        - "{{ certs_volume }}"

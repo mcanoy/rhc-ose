@@ -1,0 +1,23 @@
+---
+
+jenkins_host_url: "myjenkinshome.com"
+jenkins_home_dir: "/opt/jenkins"
+jenkins_group: "jenkins"
+jenkins_user: "jenkins"
+
+container_ssh_port: 2222
+container_http_port: 8080
+container_slave_agent: 50000
+
+mapped_ssh_port: 2229
+mapped_http_port: 8089
+mapped_slave_agent: 50009
+
+docker_image_name: rh-jenkins
+docker_tag: ubu-2.7.1
+
+jenkins_home_volume: "/opt/jenkins:/var/jenkins_home"
+certs_volume: "/etc/ssl/certs/java/:/etc/ssl/certs/java/"
+oc_tool_volume: "/opt/rh/OSE/oc:/opt/rh/OSE/oc"
+
+git_global_pipeline: "https://github.com/rht-labs/jenkins-global-pipeline-library.git"

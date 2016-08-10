@@ -1,0 +1,10 @@
+FROM jenkins:2.7.1
+
+MAINTAINER "Kevin McAnoy" "kmcanoy@redhat.com"
+
+COPY plugins.txt /usr/share/jenkins/ref/
+
+USER root
+RUN apt-get update && apt-get install -y ruby maven npm
+USER jenkins
+RUN /usr/local/bin/plugins.sh /usr/share/jenkins/ref/plugins.txt
