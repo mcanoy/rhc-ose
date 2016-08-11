@@ -24,3 +24,4 @@
         - "{{ jenkins_home_volume }}"
         - "{{ oc_tool_volume }}"
         - "{{ certs_volume }}"
+        - /var/run/docker.sock:/var/run/docker.sock

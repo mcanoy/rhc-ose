@@ -13,3 +13,10 @@
     dest: "{{ jenkins_home_dir }}-tmp"
     group: "{{ jenkins_group }}"
     owner: "{{ jenkins_user }}"
+
+- name: Copy Jenkins Dockerfile Template
+  template:
+    src: docker/Dockerfile.j2
+    dest: "{{ jenkins_home_dir }}-tmp/Dockerfile"
+    group: "{{ jenkins_group }}"
+    owner: "{{ jenkins_user }}"
