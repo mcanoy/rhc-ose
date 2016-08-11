@@ -14,6 +14,9 @@
 - name: Add RHT Labs Remote
   command: git remote add rhtlabs {{ git_global_pipeline }}
     chdir="{{ jenkins_home_dir }}-tmp/global-pipeline"
+  register: command_result
+  failed_when: "'fatal: remote rhtlabs already exists.' != command_result.stderr"
+
 
 - name: Pull RHT Labs Master
   command: git pull rhtlabs master
