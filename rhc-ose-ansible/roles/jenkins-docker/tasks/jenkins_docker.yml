@@ -10,6 +10,7 @@
       name: "{{ docker_image_name }}"
       image: "{{ docker_image_name }}:{{ docker_tag }}"
       state: started
+      restart: yes
       exposed_ports:
        - "{{ container_http_port }}"
        - "{{ container_ssh_port }}"
@@ -25,3 +26,4 @@
         - "{{ oc_tool_volume }}"
         - "{{ certs_volume }}"
         - /var/run/docker.sock:/var/run/docker.sock
+        - /etc/docker/certs.d:/etc/docker/certs.d:Z
