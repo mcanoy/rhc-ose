@@ -5,3 +5,5 @@
 - include: jenkins_docker.yml
 
 - include: jenkins_global_pipeline.yml
+
+- include: jenkins_ldap.yml

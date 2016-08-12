@@ -1,6 +1,6 @@
 ---
 
-jenkins_host_url: "myjenkinshome.com"
+jenkins_host_url: "localhost"
 jenkins_home_dir: "/opt/jenkins"
 jenkins_group: "jenkins"
 jenkins_user: "jenkins"
@@ -22,3 +22,12 @@ certs_volume: "/etc/ssl/certs/java/:/etc/ssl/certs/java/"
 oc_tool_volume: "/opt/rh/OSE/oc:/opt/rh/OSE/oc"
 
 git_global_pipeline: "https://github.com/rht-labs/jenkins-global-pipeline-library.git"
+
+ldap_access: "not-available"
+ldap_server: ldaps://server-host:636
+ldap_root_dn: ""
+ldap_user_search_base: ""
+ldap_user_search: ""
+ldap_group_search_base: ""
+ldap_manager_dn: ""
+ldap_inhibit_infer_root_dn: true

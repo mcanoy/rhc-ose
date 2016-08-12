@@ -1,13 +1,20 @@
 ---
 
-- name: Copy Jenkins Configuration Files
+- name: Copy Jenkins Config Files {{ jenkins_home_dir }}
   copy:
     src: jenkins/
     dest: "{{ jenkins_home_dir }}"
     group: "{{ jenkins_group }}"
     owner: "{{ jenkins_user }}"
 
-- name: Copy Jenkins Docker Files
+- name: Copy Jenkins Fixed SSH Port Config {{ mapped_ssh_port }}
+  template:
+    src: "jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml.j2"
+    dest: "{{ jenkins_home_dir }}/config.xml"
+    group: "{{ jenkins_group }}"
+    owner: "{{ jenkins_user }}"
+
+- name: Copy Jenkins Docker Files (plugins)
   copy:
     src: docker/
     dest: "{{ jenkins_home_dir }}-tmp"
