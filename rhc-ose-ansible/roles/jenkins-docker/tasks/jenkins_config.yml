@@ -10,7 +10,7 @@
 - name: Copy Jenkins Fixed SSH Port Config {{ mapped_ssh_port }}
   template:
     src: "jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml.j2"
-    dest: "{{ jenkins_home_dir }}/config.xml"
+    dest: "{{ jenkins_home_dir }}/org.jenkinsci.main.modules.sshd.SSHD.xml"
     group: "{{ jenkins_group }}"
     owner: "{{ jenkins_user }}"
 
