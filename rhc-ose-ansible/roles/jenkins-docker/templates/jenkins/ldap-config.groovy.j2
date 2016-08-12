@@ -10,7 +10,7 @@ String userSearch = "{{ ldap_user_search }}"
 String groupSearchBase = "{{ ldap_group_search_base }}"
 String managerDN = "{{ ldap_manager_dn }}"
 String managerAccess = "{{ ldap_access }}"
-boolean inhibitInferRootDN = {{ ldap_inhibit_infer_root_dn}}
+boolean inhibitInferRootDN = {{ inhibit_infer_root_dn }}
 
 SecurityRealm ldapRealm = new LDAPSecurityRealm(server, rootDN, userSearchBase, userSearch, groupSearchBase, managerDN, managerAccess, inhibitInferRootDN)
 Jenkins.instance.setSecurityRealm(ldapRealm)

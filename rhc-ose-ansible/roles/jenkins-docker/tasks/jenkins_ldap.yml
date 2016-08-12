@@ -1,10 +1,12 @@
 ---
-
-- name: Adding LDAP
+- name: Adding LDAP http://{{ jenkins_host_url }}:{{ mapped_http_port }}
   uri:
     url: "http://{{ jenkins_host_url }}:{{ mapped_http_port }}/scriptText"
     method: POST
     return_content: yes
     HEADER_Content-Type: "application/x-www-form-urlencoded"
     body: "script={{ lookup('template', 'jenkins/ldap-config.groovy.j2') }}"
+    register: webpage
+  tags:
+   - jenkins-ldap
 
